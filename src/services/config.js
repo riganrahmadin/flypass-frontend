@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export const RootPath = import.meta.env.VITE_BASE_URL;
 // export const RootPath = 'https://flypass-api.up.railway.app'
 // export const RootPath = 'http://localhost:8080'

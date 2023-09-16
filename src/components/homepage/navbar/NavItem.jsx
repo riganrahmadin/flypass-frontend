@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import UserCircle from '../../../assets/homepage/user-circle.png';
 
 export default function NavItem() {
@@ -17,5 +17,5 @@ export default function NavItem() {
                 <a className="nav-link px-0 mt-1 register" href="/register">Register</a>
             </div>
         </div>
-    )
+    );
 }

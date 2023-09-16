@@ -1,7 +1,7 @@
-import React from 'react'
-import Sidebar from '../layouts/sidebar/Sidebar'
-import Navbar from '../layouts/navbar/navbar'
-import NotificationItem from './NotificationItem'
+import React from 'react';
+import Sidebar from '../layouts/sidebar/Sidebar';
+import Navbar from '../layouts/navbar/navbar';
+import NotificationItem from './NotificationItem';
 
 export default function Notification() {
     return (
@@ -14,5 +14,5 @@ export default function Notification() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

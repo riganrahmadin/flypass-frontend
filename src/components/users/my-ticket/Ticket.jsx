@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Sidebar from '../../admin/layouts/sidebar/sidebaruser'
+import Sidebar from '../../admin/layouts/sidebar/sidebaruser';
 import Navbar from '../layouts/navbar/Navbar';
 import TicketList from './TicketList';
 import TicketDetail from './TicketDetail';

@@ -1,32 +1,32 @@
-import React from "react";
-import { HashRouter, Routes as Switch, Route } from "react-router-dom";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import ResetPassword from "../pages/ResetPassword";
-import ResetPasswordConfirm from "../pages/ResetPasswordConfirm";
-import ProtectedLogin from "../components/protected/ProtectedLogin";
-import Register2 from "../pages/Register2";
+import React from 'react';
+import { HashRouter, Routes as Switch, Route } from 'react-router-dom';
+import Home from '../pages/Home';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import ResetPassword from '../pages/ResetPassword';
+import ResetPasswordConfirm from '../pages/ResetPasswordConfirm';
+import ProtectedLogin from '../components/protected/ProtectedLogin';
+import Register2 from '../pages/Register2';
 
-import DashboardAdmin from "../pages/DashboardAdmin";
-import Customer from "../pages/Customer";
-import Flight from "../pages/Flight";
+import DashboardAdmin from '../pages/DashboardAdmin';
+import Customer from '../pages/Customer';
+import Flight from '../pages/Flight';
 
-import Dashboard from "../pages/Dashboard";
-import Profil from "../pages/Profil";
-import EditProfil from "../pages/EditProfil";
-import ChangePassword from "../pages/ChangePassword";
-import UserNotification from "../pages/Notification";
-import Search from "../pages/Search";
-import Payments from "../pages/Payments";
+import Dashboard from '../pages/Dashboard';
+import Profil from '../pages/Profil';
+import EditProfil from '../pages/EditProfil';
+import ChangePassword from '../pages/ChangePassword';
+import UserNotification from '../pages/Notification';
+import Search from '../pages/Search';
+import Payments from '../pages/Payments';
 
-import MyTicket from "../pages/MyTicketUser";
-import Transaction from "../pages/TransactionAdmin";
-import Wishlists from "../pages/Wishlists";
-import AdminNotification from "../components/admin/notification/Notification";
-import IsAdmin from "../components/protected/IsAdmin";
-import IsUser from "../components/protected/IsUser";
-import History from "../pages/History";
+import MyTicket from '../pages/MyTicketUser';
+import Transaction from '../pages/TransactionAdmin';
+import Wishlists from '../pages/Wishlists';
+import AdminNotification from '../components/admin/notification/Notification';
+import IsAdmin from '../components/protected/IsAdmin';
+import IsUser from '../components/protected/IsUser';
+import History from '../pages/History';
 
 export default function Routes() {
     return (
@@ -75,5 +75,5 @@ export default function Routes() {
                 <Route path="/user/dashboard/history/:id" element={<IsUser><History /></IsUser>} />
             </Switch>
         </HashRouter>
-    )
+    );
 }

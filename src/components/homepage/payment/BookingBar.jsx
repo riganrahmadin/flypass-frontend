@@ -1,10 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Plane90PSecondary from '../../../assets/homepage/plane90.svg';
 import Plane90Primary from '../../../assets/homepage/plane90.png';
 
 export default function BookingBar() {
-
     const location = useLocation().pathname;
     const { id } = useParams();
 
@@ -33,5 +32,5 @@ export default function BookingBar() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

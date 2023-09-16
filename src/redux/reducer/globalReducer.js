@@ -1,4 +1,4 @@
-import { actionType } from "./globalActionType";
+import { actionType } from './globalActionType';
 
 const globalState = {
     counter: 10,
@@ -27,7 +27,7 @@ const globalState = {
     user: '',
     notifCount: 0,
     flightLoad: false,
-}
+};
 
 const rootReducer = (state = globalState, action) => {
     if (action.type === actionType.PLUS_COUNTER) {
@@ -35,18 +35,18 @@ const rootReducer = (state = globalState, action) => {
             ...state,
             counter: state.counter + 1
         }
-    } else if (action.type === actionType.MIN_COUNTER) {
+    } if (action.type === actionType.MIN_COUNTER) {
         return {
             ...state,
             counter: state.counter - 1
         }
-    } else if (action.type === actionType.SHOW_SIDEBAR) {
+    } if (action.type === actionType.SHOW_SIDEBAR) {
         console.log('show & true');
         return {
             ...state,
             showSidebar: true
         }
-    } else if (action.type === actionType.HIDE_SIDEBAR) {
+    } if (action.type === actionType.HIDE_SIDEBAR) {
         console.log('hide & false');
         return {
             ...state,
@@ -54,7 +54,7 @@ const rootReducer = (state = globalState, action) => {
         }
 
         // search flight
-    } else if (action.type === actionType.SUBMIT_SEARCH_FLIGHT) {
+    } if (action.type === actionType.SUBMIT_SEARCH_FLIGHT) {
         const flight = { ...state.flight };
 
         const flights = action.flights.filter((data) => {
@@ -73,7 +73,7 @@ const rootReducer = (state = globalState, action) => {
             departureFlights: flights,
             flightLoad: flights.length != 0 && true,
         }
-    } else if (action.type === actionType.INPUT_SEARCH_FLIGHT) {
+    } if (action.type === actionType.INPUT_SEARCH_FLIGHT) {
         const inputForm = { ...state.flight };
         inputForm[action.event.target.name] = action.event.target.value;
 
@@ -88,12 +88,12 @@ const rootReducer = (state = globalState, action) => {
                 passenger: inputForm.passenger,
             },
         }
-    } else if (action.type === actionType.GET_FLIGHT) {
+    } if (action.type === actionType.GET_FLIGHT) {
         return {
             ...state,
             flights: action.flights
         }
-    } else if (action.type === actionType.CHANGE_FLIGHT) {
+    } if (action.type === actionType.CHANGE_FLIGHT) {
         const flight = { ...state.flight };
 
         return {
@@ -107,12 +107,12 @@ const rootReducer = (state = globalState, action) => {
                 passenger: flight.passenger,
             },
         }
-    } else if (action.type === actionType.FLIGHT_DETAIL) {
+    } if (action.type === actionType.FLIGHT_DETAIL) {
         return {
             ...state,
             flightDetail: action.flight
         }
-    } else if (action.type === actionType.CHANGE_DEPARTURE) {
+    } if (action.type === actionType.CHANGE_DEPARTURE) {
         return {
             ...state,
             flight: {
@@ -120,7 +120,7 @@ const rootReducer = (state = globalState, action) => {
                 destination: state.flight.destination
             },
         }
-    } else if (action.type === actionType.CHANGE_ARRIVAL) {
+    } if (action.type === actionType.CHANGE_ARRIVAL) {
         return {
             ...state,
             flight: {

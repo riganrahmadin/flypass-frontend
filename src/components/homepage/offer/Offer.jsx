@@ -3,7 +3,6 @@ import Love from '../../../assets/homepage/love.png';
 import Rates from '../../../assets/homepage/rates.png';
 import UserTesting from '../../../assets/homepage/user-testing.png';
 
-
 export default function Offer() {
     return (
         <section className="container offer shadow">
@@ -31,7 +30,7 @@ export default function Offer() {
                 </div>
             </div>
 
-            <div className='offer-desc'>
+            <div className="offer-desc">
                 <h6>New User</h6>
                 <h2>
                     Dont Miss The 50% Discount
@@ -44,7 +43,7 @@ export default function Offer() {
                     with the best experience.
                 </p>
                 <a href="/#/register">
-                <button type="submit" className='shadow'>Register Account</button>
+                    <button type="submit" className="shadow">Register Account</button>
                 </a>
             </div>
         </section>

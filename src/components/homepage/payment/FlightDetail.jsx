@@ -1,5 +1,9 @@
-import React, { Component } from 'react';
-import { redirect, useParams, useNavigate } from 'react-router-dom';
+import React, { Component, useState, useEffect } from 'react';
+import {
+    redirect, useParams, useNavigate, Link,
+} from 'react-router-dom';
+import { SaveAdd } from 'iconsax-react';
+import moment from 'moment';
 import Plane45 from '../../../assets/homepage/plane45.png';
 import LongAAR from '../../../assets/homepage/long-arrow-alt-right.png';
 import Garuda from '../../../assets/homepage/garuda.svg';
@@ -7,16 +11,12 @@ import LineVertical from '../../../assets/homepage/line-vertical.png';
 import ArrowBottom from '../../../assets/homepage/arrow-bottom.png';
 import Clock from '../../../assets/homepage/clock.png';
 import FlightRing from '../../../assets/homepage/flight-ring.png';
-import Bagasi from '../../../assets/homepage/bagasi.png'
-import Food from '../../../assets/homepage/food.png'
-import Entertain from '../../../assets/homepage/entertain.png'
-import Warning from '../../../assets/homepage/warning.png'
-import { Link } from 'react-router-dom';
+import Bagasi from '../../../assets/homepage/bagasi.png';
+import Food from '../../../assets/homepage/food.png';
+import Entertain from '../../../assets/homepage/entertain.png';
+import Warning from '../../../assets/homepage/warning.png';
+
 import { API } from '../../../services';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { SaveAdd } from 'iconsax-react';
-import moment from 'moment';
 
 function FlightDetail({ bookings, addCounts }) {
     const navigate = useNavigate();
@@ -55,15 +55,14 @@ function FlightDetail({ bookings, addCounts }) {
                 lastName: '',
                 identityType: '',
                 identityNumber: '',
-                baggage: ['']
+                baggage: [''],
             },
         ],
         flight1Id: '',
         flight2Id: '',
-    })
+    });
 
     useEffect(() => {
-
         const flights = id.split('&');
 
         const departureFlightId = parseInt(flights[0]);
@@ -73,14 +72,13 @@ function FlightDetail({ bookings, addCounts }) {
             setFlight(flights);
             setPrice(flights.price);
             setShow(true);
-        })
+        });
 
         flights.length === 2 && API.flightDetail(returnFlightId).then((flights) => {
             setReturnFlight(flights);
-            setRoundTrip(true)
-        })
-
-    }, [])
+            setRoundTrip(true);
+        });
+    }, []);
 
     const bookingValueHandler = (event) => {
         const books = { ...bookValue };
@@ -97,7 +95,7 @@ function FlightDetail({ bookings, addCounts }) {
             identityNumber: books.identityNumber,
             departureBaggage: [`${books.departureBaggage}`],
             returnBaggage: [`${books.returnBaggage}`],
-        })
+        });
 
         const departureBag = parseInt(books.departureBaggage);
         const returnBag = parseInt(books.returnBaggage);
@@ -106,10 +104,10 @@ function FlightDetail({ bookings, addCounts }) {
         let returnBagg = 0;
 
         if (departureBag === 25) {
-            setDepartureBaggage(flight.price * 0.1)
+            setDepartureBaggage(flight.price * 0.1);
             departurBagg = flight.price * 0.1;
         } else if (departureBag === 30) {
-            setDepartureBaggage(flight.price * 0.15)
+            setDepartureBaggage(flight.price * 0.15);
             departurBagg = flight.price * 0.15;
         } else {
             setDepartureBaggage(0);
@@ -118,10 +116,10 @@ function FlightDetail({ bookings, addCounts }) {
 
         if (roundTrip) {
             if (returnBag === 25) {
-                setReturnBaggage(returnFlight.price * 0.1)
+                setReturnBaggage(returnFlight.price * 0.1);
                 returnBagg = returnFlight.price * 0.1;
             } else if (returnBag === 30) {
-                setReturnBaggage(returnFlight.price * 0.15)
+                setReturnBaggage(returnFlight.price * 0.15);
                 returnBagg = returnFlight.price * 0.15;
             } else {
                 setReturnBaggage(0);
@@ -145,11 +143,11 @@ function FlightDetail({ bookings, addCounts }) {
                     lastName: bookValue.contactLastName,
                     identityType: bookValue.identityType,
                     identityNumber: bookValue.identityNumber,
-                    baggage: [`${books.departureBaggage}`]
+                    baggage: [`${books.departureBaggage}`],
                 },
             ],
             flight1Id: `${flight.id}`,
-        })
+        });
 
         returnFlight.id && setBook({
             contactTitle: bookValue.contactTitle,
@@ -163,66 +161,61 @@ function FlightDetail({ bookings, addCounts }) {
                     lastName: bookValue.contactLastName,
                     identityType: bookValue.identityType,
                     identityNumber: bookValue.identityNumber,
-                    baggage: [`${books.departureBaggage}`, `${books.returnBaggage}`]
+                    baggage: [`${books.departureBaggage}`, `${books.returnBaggage}`],
                 },
             ],
             flight1Id: flight.id,
-            flight2Id: returnFlight.id
-        })
-    }
+            flight2Id: returnFlight.id,
+        });
+    };
 
     const bookingHandler = () => {
-
-        if (book.contactTitle !== "" &&
-            book.contactFirstName !== "" &&
-            book.contactLastName !== "" &&
-            book.contactPhone !== "" &&
-            book.contactEmail !== "" &&
-            book.passenger[0].identityNumber !== "" &&
-            book.passenger[0].identityType !== "" &&
-            book.passenger[0].baggage !== [""]) {
-
+        if (book.contactTitle !== ''
+            && book.contactFirstName !== ''
+            && book.contactLastName !== ''
+            && book.contactPhone !== ''
+            && book.contactEmail !== ''
+            && book.passenger[0].identityNumber !== ''
+            && book.passenger[0].identityType !== ''
+            && book.passenger[0].baggage !== ' ') {
             API.book(book).then((booking) => {
                 console.log(booking.data);
 
                 bookings(booking);
                 if (booking.data) {
-                    const id = booking.data.booking.id;
+                    const { id } = booking.data.booking;
                     navigate(`/search/flight/payment/${id}`);
                     window.location.reload();
                 }
             });
         } else {
             alert('Contact Form is Required!');
-            return;
-
         }
-    }
+    };
 
     const addWishListHandler = () => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         !token && navigate('/login');
 
         console.log('Run wishlist');
 
         API.wishlists().then((flights) => {
-
             if (JSON.stringify(flights) != 'null') {
                 const wishFlight = flights.filter((f) => f.id == flight.id);
                 console.log(wishFlight);
 
                 wishFlight && API.deleteWishlists(flight.id).then((res) => {
-                    console.log(res)
+                    console.log(res);
                     res.data && setWishStatus(false);
                 });
             } else {
                 API.addWishlists(flight.id).then((res) => {
-                    console.log(res)
+                    console.log(res);
                     res.data && setWishStatus(true);
                 });
             }
-        })
-    }
+        });
+    };
 
     useEffect(() => {
         API.wishlists().then((flights) => {
@@ -230,50 +223,53 @@ function FlightDetail({ bookings, addCounts }) {
                 const wishFlight = flights.filter((f) => f.id === flight.id);
                 wishFlight.length !== 0 && setWishStatus(true);
             }
-        })
-    }, [])
+        });
+    }, []);
 
     return (
         <div>
             {show && (
                 <>
                     {/* <!-- departure flight --> */}
-                    <div class="order_flight">
+                    <div className="order_flight">
                         <h1>Departure flight</h1>
-                        <div class="selected-flight">
+                        <div className="selected-flight">
                             {/* <!-- flight header --> */}
-                            <div class="selected-flight-header card p-3 rounded-0 rounded-top">
-                                <div className='d-flex justify-content-between'>
-                                    <div class="order_flight__header">
+                            <div className="selected-flight-header card p-3 rounded-0 rounded-top">
+                                <div className="d-flex justify-content-between">
+                                    <div className="order_flight__header">
                                         <div><img src={Plane45} alt="" /></div>
                                         <div>{flight.departureAirport.city}</div>
                                         <div><img src={LongAAR} alt="" /></div>
                                         <div>{flight.arrivalAirport.city}</div>
                                     </div>
-                                    {roundTrip === false &&
-                                        <div
-                                            className={`border p-2 rounded shadow wishlist-button ${wishStatus && 'bg-primary text-white'}`}
-                                            onClick={() => addWishListHandler()} >
-                                            <SaveAdd width={40} className="" />
-                                        </div>}
+                                    {roundTrip === false
+                                        && (
+                                            <div
+                                              className={`border p-2 rounded shadow wishlist-button ${wishStatus && 'bg-primary text-white'}`}
+                                              onClick={() => addWishListHandler()}
+                                            >
+                                                <SaveAdd width={40} className="" />
+                                            </div>
+                                        )}
                                 </div>
 
-                                <div class="order_flight__body">
-                                    <div class="order_flight__body-main">
-                                        <div class="order_flight__body-main-name">
-                                            <div class="plan-logo"><img src={flight.Airline.image} alt="" width={70} /></div>
-                                            <div class="name">
+                                <div className="order_flight__body">
+                                    <div className="order_flight__body-main">
+                                        <div className="order_flight__body-main-name">
+                                            <div className="plan-logo"><img src={flight.Airline.image} alt="" width={70} /></div>
+                                            <div className="name">
                                                 <div>
                                                     <div>{flight.Airline.name}</div>
                                                     <div>{flight.FlightClass.name}</div>
                                                 </div>
-                                                <div class="mobile-timeline">
+                                                <div className="mobile-timeline">
                                                     <div>{moment(flight.departureDate).format('llll').slice(0, -15)}</div>
                                                     <div>Direct - {flight.duration.slice(1, 2)}h, {flight.duration.slice(3, 5)}m</div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="desktop-timeline">
+                                        <div className="desktop-timeline">
                                             <div><img src={LineVertical} alt="" /></div>
                                             <div>{moment(flight.arrivalDate).format('llll').slice(0, -15)}</div>
                                             <div><img src={LineVertical} alt="" /></div>
@@ -289,18 +285,18 @@ function FlightDetail({ bookings, addCounts }) {
 
                             {/* <!-- flight detail --> */}
                             <div className={`flight-detail search-detail ${roundTrip && 'search-detail-roundtrip'} card rounded-0 rounded-bottom border-top-0`}>
-                                <div class="search-detail__time s-detail">
-                                    <div class="search-detail__time_departure">{flight.departureTime.slice(0, -3)} - {moment(flight.departureDate).format('llll').slice(0, -15)}</div>
-                                    <div class="search-detail__time_estimation">
+                                <div className="search-detail__time s-detail">
+                                    <div className="search-detail__time_departure">{flight.departureTime.slice(0, -3)} - {moment(flight.departureDate).format('llll').slice(0, -15)}</div>
+                                    <div className="search-detail__time_estimation">
                                         <div><img src={Clock} alt="" /></div>
                                         <div>{flight.duration.slice(1, 2)}h, {flight.duration.slice(3, 5)}m</div>
                                     </div>
-                                    <div class="search-detail__time_arrival">{flight.arrivalTime.slice(0, -3)} - {moment(flight.arrivalDate).format('llll').slice(0, -15)}</div>
+                                    <div className="search-detail__time_arrival">{flight.arrivalTime.slice(0, -3)} - {moment(flight.arrivalDate).format('llll').slice(0, -15)}</div>
                                 </div>
-                                <div class="s-detail search-detail__ring">
+                                <div className="s-detail search-detail__ring">
                                     <img src={FlightRing} alt="" />
                                 </div>
-                                <div class="s-detail search-detail__destination">
+                                <div className="s-detail search-detail__destination">
                                     <div>
                                         <div>{flight.departureAirport.city} ({flight.departureAirport.iata})</div>
                                         <div>{flight.departureAirport.name}</div>
@@ -310,33 +306,33 @@ function FlightDetail({ bookings, addCounts }) {
                                         <div>{flight.arrivalAirport.name}</div>
                                     </div>
                                 </div>
-                                <div class="search-detail__attr">
-                                    <div class="search-detail__attr-item card">
-                                        <div class="attr_name">
+                                <div className="search-detail__attr">
+                                    <div className="search-detail__attr-item card">
+                                        <div className="attr_name">
                                             <div><img src={flight.Airline.image} alt="" width={60} /></div>
                                             <div>
                                                 <div>{flight.Airline.name}</div>
                                                 <div>{flight.flightCode} - {flight.FlightClass.name}</div>
                                             </div>
                                         </div>
-                                        <div class="attr_service">
-                                            <div class="attr_service_item">
+                                        <div className="attr_service">
+                                            <div className="attr_service_item">
                                                 <div><img src={Bagasi} alt="" /></div>
                                                 <div>Bagasi 30 kg</div>
                                             </div>
-                                            <div class="attr_service_item">
+                                            <div className="attr_service_item">
                                                 <div><img src={Food} alt="" /></div>
                                                 <div>Makanan di Pesawat</div>
                                             </div>
-                                            <div class="attr_service_item">
+                                            <div className="attr_service_item">
                                                 <div><img src={Entertain} alt="" /></div>
                                                 <div>Hiburan di Pesawat</div>
                                             </div>
-                                            <div class="attr_service_item">
+                                            <div className="attr_service_item">
                                                 <div><img src={Warning} alt="" /></div>
                                                 <div>
-                                                    <div><span class="fw-bold">Pesawat</span>: Airbus A330</div>
-                                                    <div><span class="fw-bold">Total Kursi</span>: 3-3</div>
+                                                    <div><span className="fw-bold">Pesawat</span>: Airbus A330</div>
+                                                    <div><span className="fw-bold">Total Kursi</span>: 3-3</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -345,65 +341,69 @@ function FlightDetail({ bookings, addCounts }) {
                             </div>
 
                             {/* <!-- flight price detail --> */}
-                            <div class="price-detail-header">
-                                <div class="card overflow-hidden">
-                                    <div class="price-detail">
-                                        <div class="card p-3 border-0 border-bottom rounded-0">Price Details</div>
-                                        {roundTrip ?
-                                            <>
-                                                <div class="p-3 d-flex justify-content-between">
-                                                    <div class="d-flex flex-column gap-3">
-                                                        <div>Departure ({flight.departureAirport.iata} - {flight.arrivalAirport.iata})</div>
-                                                        <div>Dewasa 1x</div>
-                                                        <div>Additional Cost</div>
+                            <div className="price-detail-header">
+                                <div className="card overflow-hidden">
+                                    <div className="price-detail">
+                                        <div className="card p-3 border-0 border-bottom rounded-0">Price Details</div>
+                                        {roundTrip
+                                            ? (
+                                                <>
+                                                    <div className="p-3 d-flex justify-content-between">
+                                                        <div className="d-flex flex-column gap-3">
+                                                            <div>Departure ({flight.departureAirport.iata} - {flight.arrivalAirport.iata})</div>
+                                                            <div>Dewasa 1x</div>
+                                                            <div>Additional Cost</div>
+                                                        </div>
+                                                        <div className="d-flex flex-column gap-3 text-end">
+                                                            <div>Rp {flight.price + departureBaggage}</div>
+                                                            <div>Rp {flight.price}</div>
+                                                            <div>Rp {departureBaggage}</div>
+                                                        </div>
                                                     </div>
-                                                    <div class="d-flex flex-column gap-3 text-end">
-                                                        <div>Rp {flight.price + departureBaggage}</div>
-                                                        <div>Rp {flight.price}</div>
-                                                        <div>Rp {departureBaggage}</div>
+                                                    <div className="p-3 d-flex justify-content-between border-top">
+                                                        <div className="d-flex flex-column gap-3">
+                                                            <div>Return ({flight.departureAirport.iata} - {flight.arrivalAirport.iata})</div>
+                                                            <div>Dewasa 1x</div>
+                                                            <div>Additional Cost</div>
+                                                        </div>
+                                                        <div className="d-flex flex-column gap-3 text-end">
+                                                            <div>Rp {returnFlight.price + returnBaggage}</div>
+                                                            <div>Rp {returnFlight.price}</div>
+                                                            <div>Rp {returnBaggage}</div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="p-3 d-flex justify-content-between border-top">
-                                                    <div class="d-flex flex-column gap-3">
-                                                        <div>Return ({flight.departureAirport.iata} - {flight.arrivalAirport.iata})</div>
-                                                        <div>Dewasa 1x</div>
-                                                        <div>Additional Cost</div>
+                                                    <div className="d-flex justify-content-between border-top mx-3 py-3 px-0">
+                                                        <div>Total Price</div>
+                                                        <div className="text-primary">Rp {flight.price + departureBaggage + returnFlight.price + returnBaggage}</div>
                                                     </div>
-                                                    <div class="d-flex flex-column gap-3 text-end">
-                                                        <div>Rp {returnFlight.price + returnBaggage}</div>
-                                                        <div>Rp {returnFlight.price}</div>
-                                                        <div>Rp {returnBaggage}</div>
+                                                </>
+                                            )
+                                            : (
+                                                <>
+                                                    <div className="p-3 d-flex justify-content-between">
+                                                        <div className="d-flex flex-column gap-3">
+                                                            <div>Departure ({flight.departureAirport.iata} - {flight.arrivalAirport.iata})</div>
+                                                            <div>Dewasa 1x</div>
+                                                            <div>Additional Cost</div>
+                                                        </div>
+                                                        <div className="d-flex flex-column gap-3 text-end">
+                                                            <div>Rp {flight.price + departureBaggage}</div>
+                                                            <div>Rp {flight.price}</div>
+                                                            <div>Rp {departureBaggage}</div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="d-flex justify-content-between border-top mx-3 py-3 px-0">
-                                                    <div>Total Price</div>
-                                                    <div class="text-primary">Rp {flight.price + departureBaggage + returnFlight.price + returnBaggage}</div>
-                                                </div>
-                                            </> :
-                                            <>
-                                                <div class="p-3 d-flex justify-content-between">
-                                                    <div class="d-flex flex-column gap-3">
-                                                        <div>Departure ({flight.departureAirport.iata} - {flight.arrivalAirport.iata})</div>
-                                                        <div>Dewasa 1x</div>
-                                                        <div>Additional Cost</div>
+                                                    <div className="d-flex justify-content-between border-top mx-3 py-3 px-0">
+                                                        <div>Total Price</div>
+                                                        <div className="text-primary">Rp {flight.price + departureBaggage}</div>
                                                     </div>
-                                                    <div class="d-flex flex-column gap-3 text-end">
-                                                        <div>Rp {flight.price + departureBaggage}</div>
-                                                        <div>Rp {flight.price}</div>
-                                                        <div>Rp {departureBaggage}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-between border-top mx-3 py-3 px-0">
-                                                    <div>Total Price</div>
-                                                    <div class="text-primary">Rp {flight.price + departureBaggage}</div>
-                                                </div>
-                                            </>}
+                                                </>
+                                            )}
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center button-price__continue mt-4 mb-5">
+                            <div className="text-center button-price__continue mt-4 mb-5">
                                 {/* <Link to={'/search/flight/payment'}> */}
-                                <div class="d-flex border-1 rounded text-white justify-content-center border-0 price-button py-2 shadow" onClick={() => bookingHandler()}>
+                                <div className="d-flex border-1 rounded text-white justify-content-center border-0 price-button py-2 shadow" onClick={() => bookingHandler()}>
                                     Booking
                                 </div>
                                 {/* </Link> */}
@@ -412,101 +412,103 @@ function FlightDetail({ bookings, addCounts }) {
                     </div>
 
                     {/* return flight */}
-                    {roundTrip &&
-                        <div class="order_flight">
-                            <h1>Return flight</h1>
-                            <div class="selected-flight">
-                                {/* <!-- flight header --> */}
-                                <div class="selected-flight-header card p-3 rounded-0 rounded-top">
-                                    <div className='d-flex justify-content-between'>
-                                        <div class="order_flight__header">
-                                            <div><img src={Plane45} alt="" /></div>
-                                            <div>{returnFlight.departureAirport.city}</div>
-                                            <div><img src={LongAAR} alt="" /></div>
-                                            <div>{returnFlight.arrivalAirport.city}</div>
+                    {roundTrip
+                        && (
+                            <div className="order_flight">
+                                <h1>Return flight</h1>
+                                <div className="selected-flight">
+                                    {/* <!-- flight header --> */}
+                                    <div className="selected-flight-header card p-3 rounded-0 rounded-top">
+                                        <div className="d-flex justify-content-between">
+                                            <div className="order_flight__header">
+                                                <div><img src={Plane45} alt="" /></div>
+                                                <div>{returnFlight.departureAirport.city}</div>
+                                                <div><img src={LongAAR} alt="" /></div>
+                                                <div>{returnFlight.arrivalAirport.city}</div>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="order_flight__body">
-                                        <div class="order_flight__body-main">
-                                            <div class="order_flight__body-main-name">
-                                                <div class="plan-logo"><img src={returnFlight.Airline.image} alt="" width={70} /></div>
-                                                <div class="name">
-                                                    <div>
-                                                        <div>{returnFlight.Airline.name}</div>
-                                                        <div>{returnFlight.FlightClass.name}</div>
-                                                    </div>
-                                                    <div class="mobile-timeline">
-                                                        <div>{moment(returnFlight.departureDate).format('llll').slice(0, -15)}</div>
-                                                        <div>Direct - {returnFlight.duration.slice(1, 2)}h, {flight.duration.slice(3, 5)}m
+                                        <div className="order_flight__body">
+                                            <div className="order_flight__body-main">
+                                                <div className="order_flight__body-main-name">
+                                                    <div className="plan-logo"><img src={returnFlight.Airline.image} alt="" width={70} /></div>
+                                                    <div className="name">
+                                                        <div>
+                                                            <div>{returnFlight.Airline.name}</div>
+                                                            <div>{returnFlight.FlightClass.name}</div>
+                                                        </div>
+                                                        <div className="mobile-timeline">
+                                                            <div>{moment(returnFlight.departureDate).format('llll').slice(0, -15)}</div>
+                                                            <div>Direct - {returnFlight.duration.slice(1, 2)}h, {flight.duration.slice(3, 5)}m
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div className="desktop-timeline">
+                                                    <div><img src={LineVertical} alt="" /></div>
+                                                    <div>{moment(returnFlight.arrivalDate).format('llll').slice(0, -15)}</div>
+                                                    <div><img src={LineVertical} alt="" /></div>
+                                                    <div>Direct - {returnFlight.duration.slice(1, 2)}h, {flight.duration.slice(3, 5)}m</div>
+                                                </div>
                                             </div>
-                                            <div class="desktop-timeline">
-                                                <div><img src={LineVertical} alt="" /></div>
-                                                <div>{moment(returnFlight.arrivalDate).format('llll').slice(0, -15)}</div>
-                                                <div><img src={LineVertical} alt="" /></div>
-                                                <div>Direct - {returnFlight.duration.slice(1, 2)}h, {flight.duration.slice(3, 5)}m</div>
-                                            </div>
-                                        </div>
 
-                                        <div>
-                                            {/* <img src={ArrowBottom} alt="" /> */}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* <!-- flight detail --> */}
-                                <div class="flight-detail search-detail return-flight card rounded-0 rounded-bottom border-top-0">
-                                    <div class="search-detail__time s-detail">
-                                        <div class="search-detail__time_departure">{returnFlight.departureTime.slice(0, -3)} - {moment(returnFlight.departureDate).format('llll').slice(0, -15)}</div>
-                                        <div class="search-detail__time_estimation">
-                                            <div><img src={Clock} alt="" /></div>
-                                            <div>{returnFlight.duration.slice(1, 2)}h, {flight.duration.slice(3, 5)}m</div>
-                                        </div>
-                                        <div class="search-detail__time_arrival">{returnFlight.arrivalTime.slice(0, -3)} - {moment(returnFlight.arrivalDate).format('llll').slice(0, -15)}</div>
-                                    </div>
-                                    <div class="s-detail search-detail__ring">
-                                        <img src={FlightRing} alt="" />
-                                    </div>
-                                    <div class="s-detail search-detail__destination">
-                                        <div>
-                                            <div>{returnFlight.departureAirport.city} ({returnFlight.departureAirport.iata})</div>
-                                            <div>{returnFlight.departureAirport.name}</div>
-                                        </div>
-                                        <div>
-                                            <div>{returnFlight.arrivalAirport.city} ({returnFlight.arrivalAirport.iata})</div>
-                                            <div>{returnFlight.arrivalAirport.name}</div>
-                                        </div>
-                                    </div>
-                                    <div class="search-detail__attr">
-                                        <div class="search-detail__attr-item card">
-                                            <div class="attr_name">
-                                                <div><img src={returnFlight.Airline.image} alt="" width={60} /></div>
-                                                <div>
-                                                    <div>{returnFlight.Airline.name}</div>
-                                                    <div>{returnFlight.flightCode} - {returnFlight.FlightClass.name}</div>
-                                                </div>
+                                            <div>
+                                                {/* <img src={ArrowBottom} alt="" /> */}
                                             </div>
-                                            <div class="attr_service">
-                                                <div class="attr_service_item">
-                                                    <div><img src={Bagasi} alt="" /></div>
-                                                    <div>Bagasi 30 kg</div>
-                                                </div>
-                                                <div class="attr_service_item">
-                                                    <div><img src={Food} alt="" /></div>
-                                                    <div>Makanan di Pesawat</div>
-                                                </div>
-                                                <div class="attr_service_item">
-                                                    <div><img src={Entertain} alt="" /></div>
-                                                    <div>Hiburan di Pesawat</div>
-                                                </div>
-                                                <div class="attr_service_item">
-                                                    <div><img src={Warning} alt="" /></div>
+                                        </div>
+                                    </div>
+
+                                    {/* <!-- flight detail --> */}
+                                    <div className="flight-detail search-detail return-flight card rounded-0 rounded-bottom border-top-0">
+                                        <div className="search-detail__time s-detail">
+                                            <div className="search-detail__time_departure">{returnFlight.departureTime.slice(0, -3)} - {moment(returnFlight.departureDate).format('llll').slice(0, -15)}</div>
+                                            <div className="search-detail__time_estimation">
+                                                <div><img src={Clock} alt="" /></div>
+                                                <div>{returnFlight.duration.slice(1, 2)}h, {flight.duration.slice(3, 5)}m</div>
+                                            </div>
+                                            <div className="search-detail__time_arrival">{returnFlight.arrivalTime.slice(0, -3)} - {moment(returnFlight.arrivalDate).format('llll').slice(0, -15)}</div>
+                                        </div>
+                                        <div className="s-detail search-detail__ring">
+                                            <img src={FlightRing} alt="" />
+                                        </div>
+                                        <div className="s-detail search-detail__destination">
+                                            <div>
+                                                <div>{returnFlight.departureAirport.city} ({returnFlight.departureAirport.iata})</div>
+                                                <div>{returnFlight.departureAirport.name}</div>
+                                            </div>
+                                            <div>
+                                                <div>{returnFlight.arrivalAirport.city} ({returnFlight.arrivalAirport.iata})</div>
+                                                <div>{returnFlight.arrivalAirport.name}</div>
+                                            </div>
+                                        </div>
+                                        <div className="search-detail__attr">
+                                            <div className="search-detail__attr-item card">
+                                                <div className="attr_name">
+                                                    <div><img src={returnFlight.Airline.image} alt="" width={60} /></div>
                                                     <div>
-                                                        <div><span class="fw-bold">Pesawat</span>: Airbus A330</div>
-                                                        <div><span class="fw-bold">Total Kursi</span>: 3-3</div>
+                                                        <div>{returnFlight.Airline.name}</div>
+                                                        <div>{returnFlight.flightCode} - {returnFlight.FlightClass.name}</div>
+                                                    </div>
+                                                </div>
+                                                <div className="attr_service">
+                                                    <div className="attr_service_item">
+                                                        <div><img src={Bagasi} alt="" /></div>
+                                                        <div>Bagasi 30 kg</div>
+                                                    </div>
+                                                    <div className="attr_service_item">
+                                                        <div><img src={Food} alt="" /></div>
+                                                        <div>Makanan di Pesawat</div>
+                                                    </div>
+                                                    <div className="attr_service_item">
+                                                        <div><img src={Entertain} alt="" /></div>
+                                                        <div>Hiburan di Pesawat</div>
+                                                    </div>
+                                                    <div className="attr_service_item">
+                                                        <div><img src={Warning} alt="" /></div>
+                                                        <div>
+                                                            <div><span className="fw-bold">Pesawat</span>: Airbus A330</div>
+                                                            <div><span className="fw-bold">Total Kursi</span>: 3-3</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -514,20 +516,20 @@ function FlightDetail({ bookings, addCounts }) {
                                     </div>
                                 </div>
                             </div>
-                        </div>}
+                        )}
 
                     {/* <!-- Contact detail --> */}
-                    <div class="contact-detail">
+                    <div className="contact-detail">
                         <h1>Contact details</h1>
-                        <div class="card p-3 contact-detail-item">
-                            <div class="input-left">
-                                <div class="mb-3">
-                                    <label for="contactFirstName" class="form-label">First Name</label>
-                                    <input type="text" name='contactFirstName' class="form-control" id="contactFirstName" placeholder="ex: John" onChange={(event) => bookingValueHandler(event)} required />
+                        <div className="card p-3 contact-detail-item">
+                            <div className="input-left">
+                                <div className="mb-3">
+                                    <label htmlFor="contactFirstName" className="form-label">First Name</label>
+                                    <input type="text" name="contactFirstName" className="form-control" id="contactFirstName" placeholder="ex: John" onChange={(event) => bookingValueHandler(event)} required />
                                 </div>
-                                <div class="mb-3">
-                                    <label for="contactTitle" class="form-label">Title</label>
-                                    <select class="form-select contact-title" aria-label="Default select example" name='contactTitle' onChange={(event) => bookingValueHandler(event)} required>
+                                <div className="mb-3">
+                                    <label htmlFor="contactTitle" className="form-label">Title</label>
+                                    <select className="form-select contact-title" aria-label="Default select example" name="contactTitle" onChange={(event) => bookingValueHandler(event)} required>
                                         <option selected>Select title</option>
                                         <option value="mr">Tn</option>
                                         <option value="mr">Mr</option>
@@ -535,27 +537,27 @@ function FlightDetail({ bookings, addCounts }) {
                                         <option value="mrs">Mrs</option>
                                     </select>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="contactPhone" class="form-label">No. Handphone</label>
-                                    <input type="text" class="form-control" id="contactPhone" name="contactPhone" placeholder="0821xxxxxxxx" onChange={(event) => bookingValueHandler(event)} required />
+                                <div className="mb-3">
+                                    <label htmlFor="contactPhone" className="form-label">No. Handphone</label>
+                                    <input type="text" className="form-control" id="contactPhone" name="contactPhone" placeholder="0821xxxxxxxx" onChange={(event) => bookingValueHandler(event)} required />
                                 </div>
-                                <div class="mb-3">
-                                    <label for="identityNumber" class="form-label">Identity Number</label>
-                                    <input type="text" class="form-control" id="identityNumber" name="identityNumber" placeholder="521xxxxxxxx" onChange={(event) => bookingValueHandler(event)} required />
+                                <div className="mb-3">
+                                    <label htmlFor="identityNumber" className="form-label">Identity Number</label>
+                                    <input type="text" className="form-control" id="identityNumber" name="identityNumber" placeholder="521xxxxxxxx" onChange={(event) => bookingValueHandler(event)} required />
                                 </div>
                             </div>
-                            <div class="input-right">
-                                <div class="mb-3">
-                                    <label for="contactLastName" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" name="contactLastName" id="contactLastName" placeholder="ex: Doe" onChange={(event) => bookingValueHandler(event)} required />
+                            <div className="input-right">
+                                <div className="mb-3">
+                                    <label htmlFor="contactLastName" className="form-label">Last Name</label>
+                                    <input type="text" className="form-control" name="contactLastName" id="contactLastName" placeholder="ex: Doe" onChange={(event) => bookingValueHandler(event)} required />
                                 </div>
-                                <div class="mb-3">
-                                    <label for="contactEmail" class="form-label">Email</label>
-                                    <input type="email" class="form-control" name='contactEmail' id="contactEmail" placeholder="name@example.com" onChange={(event) => bookingValueHandler(event)} required />
+                                <div className="mb-3">
+                                    <label htmlFor="contactEmail" className="form-label">Email</label>
+                                    <input type="email" className="form-control" name="contactEmail" id="contactEmail" placeholder="name@example.com" onChange={(event) => bookingValueHandler(event)} required />
                                 </div>
-                                <div class="mb-3">
-                                    <label for="identityType" class="form-label">Identity Type</label>
-                                    <select class="form-select contact-title" aria-label="Default select example" name='identityType' onChange={(event) => bookingValueHandler(event)} required>
+                                <div className="mb-3">
+                                    <label htmlFor="identityType" className="form-label">Identity Type</label>
+                                    <select className="form-select contact-title" aria-label="Default select example" name="identityType" onChange={(event) => bookingValueHandler(event)} required>
                                         <option selected>Identity Type</option>
                                         <option value="ktp">KTP</option>
                                         <option value="passport">Passport</option>
@@ -566,18 +568,18 @@ function FlightDetail({ bookings, addCounts }) {
                     </div>
 
                     {/* <!-- Add ons --> */}
-                    <div class="add-ons">
+                    <div className="add-ons">
                         <h1>Add ons</h1>
-                        <div class="card p-3 border-bottom-0 rounded-0 rounded-top">Add Baggage</div>
-                        <div class="card p-3 rounded-0 gap-3 rounded-bottom">
-                            <div class="d-flex justify-content-between">
+                        <div className="card p-3 border-bottom-0 rounded-0 rounded-top">Add Baggage</div>
+                        <div className="card p-3 rounded-0 gap-3 rounded-bottom">
+                            <div className="d-flex justify-content-between">
                                 <div>{flight.departureAirport.city} ({flight.departureAirport.iata}) - {flight.arrivalAirport.city} ({flight.arrivalAirport.iata})</div>
                                 <div>{flight.flightCode}</div>
                             </div>
 
-                            <div class="d-flex flex-column gap-1 add-ons__input">
+                            <div className="d-flex flex-column gap-1 add-ons__input">
                                 <div>Baggage</div>
-                                <select class="form-select" aria-label="Default select example" name='departureBaggage' onChange={(event) => bookingValueHandler(event)} required>
+                                <select className="form-select" aria-label="Default select example" name="departureBaggage" onChange={(event) => bookingValueHandler(event)} required>
                                     <option selected>Open this select menu</option>
                                     <option value="0">20 kg - free</option>
                                     <option value="25">5 + 20 kg - Rp. {flight.price * 0.1}</option>
@@ -585,23 +587,25 @@ function FlightDetail({ bookings, addCounts }) {
                                 </select>
                             </div>
                         </div>
-                        {roundTrip &&
-                            <div class="card p-3 rounded-0 gap-3 rounded-0 border-top-0">
-                                <div class="d-flex justify-content-between">
-                                    <div>{returnFlight.departureAirport.city} ({returnFlight.departureAirport.iata}) - {returnFlight.arrivalAirport.city} ({returnFlight.arrivalAirport.iata})</div>
-                                    <div>{returnFlight.flightCode}</div>
-                                </div>
+                        {roundTrip
+                            && (
+                                <div className="card p-3 rounded-0 gap-3 rounded-0 border-top-0">
+                                    <div className="d-flex justify-content-between">
+                                        <div>{returnFlight.departureAirport.city} ({returnFlight.departureAirport.iata}) - {returnFlight.arrivalAirport.city} ({returnFlight.arrivalAirport.iata})</div>
+                                        <div>{returnFlight.flightCode}</div>
+                                    </div>
 
-                                <div class="d-flex flex-column gap-1 add-ons__input">
-                                    <div>Baggage</div>
-                                    <select class="form-select" aria-label="Default select example" name='returnBaggage' onChange={(event) => bookingValueHandler(event)} required>
-                                        <option selected>Open this select menu</option>
-                                        <option value="0">20 kg - free</option>
-                                        <option value="25">5 + 20 kg - Rp. {flight.price * 0.1}</option>
-                                        <option value="30">10 + 20 kg - Rp. {flight.price * 0.15}</option>
-                                    </select>
+                                    <div className="d-flex flex-column gap-1 add-ons__input">
+                                        <div>Baggage</div>
+                                        <select className="form-select" aria-label="Default select example" name="returnBaggage" onChange={(event) => bookingValueHandler(event)} required>
+                                            <option selected>Open this select menu</option>
+                                            <option value="0">20 kg - free</option>
+                                            <option value="25">5 + 20 kg - Rp. {flight.price * 0.1}</option>
+                                            <option value="30">10 + 20 kg - Rp. {flight.price * 0.15}</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>}
+                            )}
                     </div>
 
                     {/* <!-- payment --> */}
@@ -609,7 +613,7 @@ function FlightDetail({ bookings, addCounts }) {
                 </>
             )}
         </div>
-    )
+    );
 }
 
 export default FlightDetail;

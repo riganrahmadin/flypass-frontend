@@ -4,14 +4,13 @@ import Place from '../../../assets/homepage/place.png';
 import Flight from '../../../assets/homepage/flight.png';
 import EasyClick from '../../../assets/homepage/easy-click.png';
 
-
 export default function ServiceItem() {
     return (
         <>
             <div className="main-service">
                 <div>
                     <h5>Our Service</h5>
-                    <h1 className='d-flex flex-column gap-1 mt-2'>
+                    <h1 className="d-flex flex-column gap-1 mt-2">
                         <span>We Offer</span>
                         <span>Best Service</span>
                     </h1>

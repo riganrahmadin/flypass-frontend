@@ -1,11 +1,15 @@
-import { flight, flightById, addFlight, DeleteFlight } from './flight';
+import {
+    flight, flightById, addFlight, DeleteFlight,
+} from './flight';
 import { allBookings } from './listAllBookings';
 import { airport } from './airport';
 import { booking, getBookByUserLog } from './booking';
 import { airline } from './airline';
 import { airplane } from './airplane';
 import { wishlist, addWishlist, DeleteWishlist } from './wishlist';
-import { getTransaction, transaction, confirm, reject, getHistoryTransaction } from './transaction';
+import {
+    getTransaction, transaction, confirm, reject, getHistoryTransaction,
+} from './transaction';
 import { adminNotification, userNotification, updateNotification } from './notification';
 import { whoami } from './whoami';
 import { login } from './auth';
@@ -21,13 +25,14 @@ const airplanes = () => airplane('v1/airplanes');
 const flightDetail = (id) => flightById(`v1/flights/${id}`);
 const deleteFlight = (id) => DeleteFlight(`v1/flights/${id}`);
 
+// eslint-disable-next-line no-shadow
 const book = (book) => booking('v1/flights/books', book);
 const getBookByUserLogin = () => getBookByUserLog('v1/bookings');
 
 const airports = () => airport('v1/airport');
 
 const wishlists = () => wishlist('v1/wishlist');
-const addWishlists = (id) => addWishlist(`v1/wishlist`, id);
+const addWishlists = (id) => addWishlist('v1/wishlist', id);
 const deleteWishlists = (id) => DeleteWishlist(`v1/wishlist/${id}`);
 
 const transactionsGet = () => getTransaction('v1/pay/find/all');
@@ -45,6 +50,7 @@ const whoAmI = () => whoami('v1/whoami');
 const signin = (user) => login('v1/login', user);
 const getProfiles = () => getProfile('v1/user');
 
+// eslint-disable-next-line import/prefer-default-export
 export const API = {
     getProfiles,
     flights,
@@ -71,4 +77,4 @@ export const API = {
     updateNotifications,
     getHistoryTransactions,
 
-}
+};

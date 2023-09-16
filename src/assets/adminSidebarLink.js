@@ -23,7 +23,7 @@ const sidebarLink = [
         path: '/notification',
         icon: 'bi bi-bell',
         display: 'Notification',
-    }
+    },
 ];
 
 export default sidebarLink;

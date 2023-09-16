@@ -1,7 +1,7 @@
 import React from 'react';
-import Garuda from '../../../assets/dasboard-admin/garuda.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlane } from '@fortawesome/free-solid-svg-icons';
+import Garuda from '../../../assets/dasboard-admin/garuda.svg';
 
 export default function Card() {
     return (
@@ -22,13 +22,13 @@ export default function Card() {
                                 <span>E-TICKET</span>
                             </div>
                             <div className="card-body d-flex flex-row align-items-center">
-                                <div className="line-vertical"></div>
+                                <div className="line-vertical" />
                                 <div className="row e-ticket-detail flex-row justify-content-between m-0">
                                     <div className="col-lg-8 ticket-left p-0">
                                         <div className="frame-top d-flex flex-row align-items-center">
                                             <img src={Garuda} alt="Airplanes" />
                                             <h6 className="name-plane">Garuda Indonesia</h6>
-                                            <div className="divider-plane"></div>
+                                            <div className="divider-plane" />
                                             <span className="classes">Economy Class</span>
                                         </div>
                                         <div className="frame-bottom d-flex flex-row">

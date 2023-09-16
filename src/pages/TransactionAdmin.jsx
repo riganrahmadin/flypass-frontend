@@ -10,25 +10,19 @@ import '../styles/transaction.css';
 class TransactionAdmin extends Component {
     render() {
         return (
-            <Fragment>
-                <Transaction />
-            </Fragment>
-        )
+            <Transaction />
+        );
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        showSidebar: state.showSidebar
-    }
-}
+const mapStateToProps = (state) => ({
+    showSidebar: state.showSidebar,
+});
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        showSidebarDispatch: () => dispatch({
-            type: actionType.SHOW_SIDEBAR
-        }),
-    }
-}
+const mapDispatchToProps = (dispatch) => ({
+    showSidebarDispatch: () => dispatch({
+        type: actionType.SHOW_SIDEBAR,
+    }),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionAdmin);

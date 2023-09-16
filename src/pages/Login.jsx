@@ -1,19 +1,18 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import Navbar from '../components/homepage/navbar/Navbar';
 import LoginPage from '../components/login/LoginPage';
 import Footer from '../components/homepage/footer/Footer';
 import { actionType } from '../redux/reducer/globalActionType';
 
 // style homepage
-import '../styles/homepage.css'
-import '../styles/login.css'
+import '../styles/homepage.css';
+import '../styles/login.css';
 
 class Login extends Component {
     render() {
-
         return (
-            <Fragment>
+            <>
                 <Navbar />
                 <LoginPage />
                 <Footer />
@@ -25,26 +24,22 @@ class Login extends Component {
                     <h3>{this.props.counter}</h3>
                     <button onClick={this.props.minCounter}>-</button>
                 </div> */}
-            </Fragment>
-        )
+            </>
+        );
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        counter: state.counter
-    }
-}
+const mapStateToProps = (state) => ({
+    counter: state.counter,
+});
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        plusCounter: () => dispatch({
-            type: actionType.PLUS_COUNTER,
-        }),
-        minCounter: () => dispatch({
-            type: actionType.MIN_COUNTER,
-        }),
-    }
-}
+const mapDispatchToProps = (dispatch) => ({
+    plusCounter: () => dispatch({
+        type: actionType.PLUS_COUNTER,
+    }),
+    minCounter: () => dispatch({
+        type: actionType.MIN_COUNTER,
+    }),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
