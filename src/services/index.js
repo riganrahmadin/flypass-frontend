@@ -15,35 +15,35 @@ import { whoami } from './whoami';
 import { login } from './auth';
 import { getProfile } from './user';
 
-const flights = () => flight('v1/flights');
-const createFlight = (data) => addFlight('v1/flights', data);
+const flights = () => flight('/v1/flights');
+const createFlight = (data) => addFlight('/v1/flights', data);
 
-const listBookings = () => allBookings('v1/bookings/all');
+const listBookings = () => allBookings('/v1/bookings/all');
 
-const airlines = () => airline('v1/airlines');
-const airplanes = () => airplane('v1/airplanes');
-const flightDetail = (id) => flightById(`v1/flights/${id}`);
-const deleteFlight = (id) => DeleteFlight(`v1/flights/${id}`);
+const airlines = () => airline('/v1/airlines');
+const airplanes = () => airplane('/v1/airplanes');
+const flightDetail = (id) => flightById(`/v1/flights/${id}`);
+const deleteFlight = (id) => DeleteFlight(`/v1/flights/${id}`);
 
 // eslint-disable-next-line no-shadow
-const book = (book) => booking('v1/flights/books', book);
-const getBookByUserLogin = () => getBookByUserLog('v1/bookings');
+const book = (book) => booking('/v1/flights/books', book);
+const getBookByUserLogin = () => getBookByUserLog('/v1/bookings');
 
-const airports = () => airport('v1/airport');
+const airports = () => airport('/v1/airport');
 
 const wishlists = () => wishlist('v1/wishlist');
 const addWishlists = (id) => addWishlist('v1/wishlist', id);
 const deleteWishlists = (id) => DeleteWishlist(`v1/wishlist/${id}`);
 
-const transactionsGet = () => getTransaction('v1/pay/find/all');
-const transactions = (id, data) => transaction('v1/pay/create', id, data);
-const confirmPayment = (id) => confirm(`v1/pay/confirm/${id}`, id);
-const rejectPayment = (id) => reject(`v1/pay/reject/${id}`, id);
-const getHistoryTransactions = () => getHistoryTransaction('v1/bookings/history');
+const transactionsGet = () => getTransaction('/v1/pay/find/all');
+const transactions = (id, data) => transaction('/v1/pay/create', id, data);
+const confirmPayment = (id) => confirm(`/v1/pay/confirm/${id}`, id);
+const rejectPayment = (id) => reject(`/v1/pay/reject/${id}`, id);
+const getHistoryTransactions = () => getHistoryTransaction('/v1/bookings/history');
 
-const userNotifications = () => userNotification('v1/notification');
-const adminNotifications = () => adminNotification('v1/notification/admin');
-const updateNotifications = (id) => updateNotification(`v1/notification/${id}`, id);
+const userNotifications = () => userNotification('/v1/notification');
+const adminNotifications = () => adminNotification('/v1/notification/admin');
+const updateNotifications = (id) => updateNotification(`/v1/notification/${id}`, id);
 
 const whoAmI = () => whoami('/v1/whoami');
 
