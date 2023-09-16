@@ -41,8 +41,8 @@ const confirmPayment = (id) => confirm(`v1/pay/confirm/${id}`, id);
 const rejectPayment = (id) => reject(`v1/pay/reject/${id}`, id);
 const getHistoryTransactions = () => getHistoryTransaction('v1/bookings/history');
 
-const userNotifications = () => userNotification('v1/notification/');
-const adminNotifications = () => adminNotification('v1/notification/admin/');
+const userNotifications = () => userNotification('v1/notification');
+const adminNotifications = () => adminNotification('v1/notification/admin');
 const updateNotifications = (id) => updateNotification(`v1/notification/${id}`, id);
 
 const whoAmI = () => whoami('v1/whoami');

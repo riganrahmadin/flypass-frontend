@@ -17,6 +17,7 @@ import Profil from '../pages/Profil';
 import EditProfil from '../pages/EditProfil';
 import ChangePassword from '../pages/ChangePassword';
 import UserNotification from '../pages/Notification';
+// eslint-disable-next-line no-unused-vars
 import Search from '../pages/Search';
 import Payments from '../pages/Payments';
 
