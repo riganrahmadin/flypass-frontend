@@ -45,10 +45,10 @@ const userNotifications = () => userNotification('v1/notification');
 const adminNotifications = () => adminNotification('v1/notification/admin');
 const updateNotifications = (id) => updateNotification(`v1/notification/${id}`, id);
 
-const whoAmI = () => whoami('v1/whoami');
+const whoAmI = () => whoami('/v1/whoami');
 
-const signin = (user) => login('v1/login', user);
-const getProfiles = () => getProfile('v1/user');
+const signin = (user) => login('/v1/login', user);
+const getProfiles = () => getProfile('/v1/user');
 
 // eslint-disable-next-line import/prefer-default-export
 export const API = {
