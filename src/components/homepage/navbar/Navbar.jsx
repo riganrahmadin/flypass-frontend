@@ -353,6 +353,7 @@ export default function Navbar() {
 
                                             {showLogin
                                                 && (
+                                                    // eslint-disable-next-line react/jsx-no-useless-fragment
                                                     <>
                                                         {login == false
                                                             ? (
@@ -367,7 +368,7 @@ export default function Navbar() {
                                                                 <li className="has-children px-0">
                                                                     <a href="#" className="nav-link">
                                                                         <img src={Profile} alt="" width={35} />
-                                                                        <span className="ms-2">Hi, Pahrurozi</span>
+                                                                        <span className="ms-2">Hi, {name}</span>
                                                                     </a>
                                                                     <ul className="dropdown arrow-top">
                                                                         <li>

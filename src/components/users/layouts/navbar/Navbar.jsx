@@ -57,7 +57,7 @@ export default function navbar({ showSidebarDispatch }) {
                 <li className="nav-item dropdown user-profile">
                     <a href="#" className="nav-link dropdown-toggle link-profile" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img className="img-profile rounded-circle" src={Profile} alt="" />
-                        <span className="d-none d-lg-inline text-name">Hi, {name}</span>
+                        <span className="d-none d-lg-inline text-name">Hi,{name}</span>
                     </a>
                     <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a href="/" className="dropdown-item">Beranda</a>

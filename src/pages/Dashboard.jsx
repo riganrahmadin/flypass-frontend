@@ -8,6 +8,7 @@ import '../styles/homepage.css';
 import '../styles/profil.css';
 import '../styles/dashboard.css';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class Dashboard extends Component {
     render() {
         return (
