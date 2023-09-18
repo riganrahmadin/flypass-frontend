@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Routes as Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Routes as Switch, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
@@ -31,7 +31,7 @@ import History from '../pages/History';
 
 export default function Routes() {
     return (
-        <HashRouter>
+        <BrowserRouter>
             <Switch>
                 {/* homepage */}
                 {/* <Route path="/" element={<App />} /> */}
@@ -75,6 +75,6 @@ export default function Routes() {
                 <Route path="/user/dashboard/history" element={<IsUser><History /></IsUser>} />
                 <Route path="/user/dashboard/history/:id" element={<IsUser><History /></IsUser>} />
             </Switch>
-        </HashRouter>
+        </BrowserRouter>
     );
 }
