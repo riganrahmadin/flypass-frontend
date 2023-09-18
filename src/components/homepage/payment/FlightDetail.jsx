@@ -177,7 +177,7 @@ function FlightDetail({ bookings, addCounts }) {
             && book.contactEmail !== ''
             && book.passenger[0].identityNumber !== ''
             && book.passenger[0].identityType !== ''
-            && book.passenger[0].baggage !== ' ') {
+            && book.passenger[0].baggage !== ['']) {
             API.book(book).then((booking) => {
                 console.log(booking.data);
 

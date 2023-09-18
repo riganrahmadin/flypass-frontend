@@ -103,7 +103,7 @@ export default function CreateFlight() {
                                 <label htmlFor="departureTime" className="form-label">Departure Time</label>
                                 <input name="departureTime" type="time" className="form-control mt-0" id="departureTime" value={data.departureTime} onChange={handleInput} required />
                             </div>
-                            <div clasNames="mb-0">
+                            <div className="mb-0">
                                 <label htmlFor="baggage" className="form-label">Baggage</label>
                                 <input name="baggage" type="text" className="form-control mt-0" id="baggage" value={data.baggage} onChange={handleInput} placeholder="Set Baggage" required />
                             </div>
